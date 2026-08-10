@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ENGLISH SPUR- PWVA 1.0 BY SHOVAN KAPRI </title>
+    <title>English Spur - Desktop Pro Suite</title>
     
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -81,7 +81,7 @@
         .pdf-tab .close-tab { font-size: 10px; padding: 3px; border-radius: 50%; flex-shrink: 0; transition: background 0.2s; }
         .pdf-tab .close-tab:hover { background: rgba(239, 68, 68, 0.1); color: #ef4444; }
 
-        /* অতি-কম্প্যাক্ট সিঙ্গেল-লাইন প্রফেশনাল টুলবার */
+        /* অতি-কম্প্যাক্ট সিঙ্গেল-লাইন প্রফেশনাল টুলবার (ব্র্যান্ড ফিক্সড সহ) */
         .acrobat-toolbar {
             background: var(--toolbar-bg); padding: 8px 16px; box-shadow: var(--shadow);
             display: flex; justify-content: flex-start; align-items: center; border-bottom: 2px solid var(--border);
@@ -89,9 +89,16 @@
             width: 100%; -webkit-overflow-scrolling: touch;
         }
 
+        /* ব্র্যান্ড নেম ফিক্সড বা ফ্রিজ রাখার স্টাইল */
+        .brand-fixed-container {
+            position: sticky; left: 0; z-index: 101000; background: var(--toolbar-bg);
+            display: flex; align-items: center; gap: 6px; padding-right: 12px;
+            border-right: 2px solid var(--border); flex-shrink: 0; box-shadow: 5px 0 10px -5px rgba(0,0,0,0.05);
+        }
+
         .toolbar-section { display: flex; align-items: center; gap: 6px; flex-wrap: nowrap; flex-shrink: 0; }
         
-        .brand-mini { display: flex; align-items: center; gap: 6px; margin-right: 6px; flex-shrink: 0; }
+        .brand-mini { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
         .brand-mini img { height: 26px; width: auto; object-fit: contain; }
         .brand-mini span { font-weight: 800; font-size: 13.5px; color: var(--primary); letter-spacing: -0.3px; }
         .brand-mini span span { color: #f97316; }
@@ -109,6 +116,11 @@
         .tool-btn.video-toggle-btn { background: #0284c7; }
         .tool-btn.video-toggle-btn.active-video { background: #0369a1 !important; box-shadow: inset 0 2px 4px rgba(0,0,0,0.2); }
         .tool-btn.google-btn { background: #4285F4; }
+        .tool-btn.util-btn { background: #8b5cf6; }
+
+        .shortcut-badge {
+            font-size: 9px; background: rgba(0, 0, 0, 0.25); color: #fff; padding: 1px 4px; border-radius: 3px; font-weight: 800; margin-left: 2px;
+        }
 
         .file-upload-btn {
             background: var(--accent); color: white; padding: 5px 10px; border-radius: 6px; font-size: 11px; font-weight: 700; cursor: pointer;
@@ -117,11 +129,10 @@
         .file-upload-btn:hover { opacity: 0.9; transform: translateY(-1px); }
         .file-upload-btn input { display: none; }
 
-        /* টুলবারে ফিক্সড করা কম্প্যাক্ট অডিও প্লেয়ার উইজেট */
         .toolbar-audio-widget {
             display: flex; align-items: center; gap: 4px; background: #f1f5f9; padding: 3px 8px; border-radius: 6px; border: 1px solid var(--border); flex-shrink: 0;
         }
-        .toolbar-audio-widget select { font-size: 10.5px; font-weight: 700; padding: 2px 4px; border-radius: 6px; border: 1px solid var(--border); background: #fff; outline: none; max-width: 110px; }
+        .toolbar-audio-widget select { font-size: 10.5px; font-weight: 700; padding: 2px 4px; border-radius: 6px; border: 1px solid var(--border); background: #fff; outline: none; max-width: 90px; }
         .audio-ctrl-btn { background: var(--accent); color: white; border: none; width: 22px; height: 22px; border-radius: 4px; cursor: pointer; display: inline-flex; justify-content: center; align-items: center; font-size: 10px; transition: 0.2s; }
         .audio-ctrl-btn:hover { opacity: 0.9; transform: scale(1.05); }
 
@@ -143,13 +154,14 @@
         .page-indicator { font-size: 11px; font-weight: 700; color: var(--text); display: flex; align-items: center; gap: 3px; flex-shrink: 0; }
         .zoom-indicator-input { width: 50px; padding: 3px; font-size: 11px; font-weight: 700; text-align: center; color: var(--primary); background: #f1f5f9; border-radius: 6px; border: 1px solid var(--border); outline: none; flex-shrink: 0; }
 
-        /* মূল ফুল-স্ক্রিন ফ্লেক্স ওয়ার্কস্পেস */
+        /* মূল ফুল-স্ক্রিন ফ্লেক্স ওয়ার্কস্পেস এবং লেফট স্ক্রল ফিট */
         .workspace { flex-grow: 1; width: 100%; display: flex; height: calc(100vh - 78px); overflow: hidden; position: relative; align-items: stretch; }
         
         .pdf-view-area {
-            flex: 1 1 auto; min-width: 0; padding: 20px;
+            flex: 1 1 auto; min-width: 0; padding: 40px;
             overflow: auto;
-            display: flex; justify-content: center; align-items: flex-start;
+            display: flex; justify-content: flex-start;
+            align-items: flex-start;
             background: #e2e8f0; height: 100%; position: relative;
             cursor: grab;
         }
@@ -158,18 +170,8 @@
         .canvas-container {
             position: relative; display: inline-block; line-height: 0; background: #ffffff;
             border-radius: 10px; box-shadow: 0 15px 30px -10px rgba(0,0,0,0.15); border-top: 5px solid var(--accent); overflow: hidden;
-            flex-shrink: 0; margin: auto;
+            flex-shrink: 0; margin: 20px;
             cursor: default;
-        }
-
-        /* হোয়াইটবোর্ড কাস্টম স্টাইল */
-        .canvas-container.greenboard {
-            background-color: #113f27 !important; border-top-color: #34d399 !important;
-            background-image: none !important;
-        }
-        .canvas-container.linepage {
-            background-color: #fffbeb !important; border-top-color: #d97706 !important;
-            background-image: repeating-linear-gradient(white, white 31px, #cbd5e1 31px, #cbd5e1 32px);
         }
 
         #pdfCanvas { display: block; max-width: none; height: auto; }
@@ -206,13 +208,61 @@
             flex-grow: 1; width: 100%; border: none; background: #ffffff;
         }
 
-        /* সাইড ভিডিও প্লেয়ার প্যানেল */
+        /* ইউটিলিটি মডাল উইন্ডোজ */
+        .utility-modal-overlay {
+            position: fixed; top: 78px; left: 0; width: 100%; height: calc(100vh - 78px); background: rgba(15, 23, 42, 0.6);
+            display: none; justify-content: center; align-items: center; z-index: 999999; backdrop-filter: blur(4px); padding: 20px;
+        }
+        .utility-modal-overlay.active { display: flex; }
+        .utility-modal-box {
+            background: #ffffff; width: 440px; border-radius: 16px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.3); overflow: hidden; border: 1.5px solid var(--accent);
+            display: flex; flex-direction: column; animation: modalPop 0.2s ease;
+        }
+        @keyframes modalPop { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .utility-modal-header {
+            background: var(--primary); color: white; padding: 14px 18px; font-weight: 800; font-size: 14px; display: flex; justify-content: space-between; align-items: center;
+        }
+        .utility-modal-body { padding: 18px; display: flex; flex-direction: column; gap: 12px; background: #f8fafc; max-height: 500px; overflow-y: auto; }
+
+        /* ক্যালকুলেটর ডিজাইন */
+        .calc-screen { width: 100%; background: #0f172a; color: #38bdf8; font-size: 26px; font-weight: 800; text-align: right; padding: 14px; border-radius: 8px; border: none; margin-bottom: 4px; }
+        .calc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+        .calc-btn { background: #ffffff; border: 1px solid var(--border); padding: 14px; font-weight: 700; font-size: 15px; border-radius: 8px; cursor: pointer; color: var(--text); transition: 0.15s; }
+        .calc-btn:hover { background: #f1f5f9; border-color: var(--accent); }
+        .calc-btn.operator { background: var(--accent); color: white; }
+
+        /* কারেন্সি কনভার্টার ও ওয়ার্ল্ড ক্লক ডিজাইন */
+        .util-input-group { display: flex; flex-direction: column; gap: 5px; font-size: 11.5px; font-weight: 700; color: #475569; }
+        .util-input-group input, .util-input-group select { padding: 10px 12px; border-radius: 8px; border: 1.5px solid var(--border); font-size: 13.5px; font-weight: 600; outline: none; background: #fff; }
+        
+        .clock-card { 
+            background: #ffffff; padding: 12px 16px; border-radius: 10px; border: 1px solid var(--border); 
+            display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+        .clock-flag { font-size: 18px; margin-right: 6px; }
+        .clock-info { display: flex; flex-direction: column; gap: 2px; }
+        .clock-country { font-weight: 800; font-size: 13px; color: var(--text); }
+        .clock-date { font-weight: 600; font-size: 10.5px; color: #64748b; }
+        .clock-time { font-size: 13.5px; font-weight: 800; color: var(--primary); background: #f1f5f9; padding: 5px 10px; border-radius: 6px; border: 1px solid var(--border); letter-spacing: 0.5px; }
+
+        /* ভিজ্যুয়াল ফান ফ্যাক্টস কার্ড ডিজাইন */
+        .fact-card { 
+            background: #ffffff; padding: 14px 16px; border-radius: 10px; border: 1px solid var(--border); 
+            border-left: 5px solid var(--accent); font-size: 13px; font-weight: 600; line-height: 1.5; color: #1e293b; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03); display: flex; gap: 12px; align-items: flex-start; transition: transform 0.2s;
+        }
+        .fact-card:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.06); }
+        .fact-icon { font-size: 18px; color: var(--accent); flex-shrink: 0; margin-top: 2px; }
+        .fact-content { display: flex; flex-direction: column; gap: 3px; }
+        .fact-title { font-weight: 800; font-size: 12.5px; color: var(--primary); text-transform: uppercase; letter-spacing: 0.3px; }
+
+        /* সাইড ভিডিও ও নোটপ্যাড প্যানেল */
         .side-video-panel {
             width: 0px; height: 100%; background: #ffffff; border-left: 1px solid var(--border);
             display: none; flex-direction: column; flex-shrink: 0; transition: width 0.3s ease;
             box-shadow: -5px 0 25px rgba(0,0,0,0.05); z-index: 10002;
         }
-        .side-video-panel.active { width: 420px; display: flex !important; }
+        .side-video-panel.active { width: 440px; display: flex !important; }
         
         .video-header-bar {
             display: flex; justify-content: space-between; align-items: center; padding: 10px 14px;
@@ -245,6 +295,11 @@
         .playlist-item { padding: 6px 10px; border-bottom: 1px solid #f1f5f9; cursor: pointer; font-size: 10.5px; display: flex; justify-content: space-between; align-items: center; color: var(--text); font-weight: 500; }
         .playlist-item:hover { background: #f1f5f9; }
         .playlist-item.active { background: #0284c7; color: white; font-weight: 700; }
+        .playlist-item-actions { display: flex; align-items: center; gap: 6px; }
+        .playlist-delete-btn { background: none; border: none; color: #94a3b8; cursor: pointer; font-size: 11px; padding: 2px 4px; border-radius: 4px; transition: 0.2s; }
+        .playlist-delete-btn:hover { background: rgba(239, 68, 68, 0.1); color: #ef4444; }
+        .playlist-item.active .playlist-delete-btn { color: #f8fafc; }
+        .playlist-item.active .playlist-delete-btn:hover { background: rgba(255, 255, 255, 0.2); color: #fff; }
         .page-tag { font-size: 9px; opacity: 0.85; background: rgba(0,0,0,0.08); padding: 1px 4px; border-radius: 3px; }
         .playlist-item.active .page-tag { background: rgba(255,255,255,0.2); }
 
@@ -282,7 +337,7 @@
 
     <!-- ডানদিকের কর্নারে ফিক্সড "Developed by Shovan Kapri" -->
     <div class="top-right-developer-badge">
-        ESPWVA1.0  BY <span>SHOVAN KAPRI</span>
+        Developed by <span>শোভন কাপড়ী</span>
     </div>
 
     <!-- পাসওয়ার্ড লগইন স্ক্রিন -->
@@ -296,24 +351,37 @@
         </div>
     </div>
 
+    <!-- ইউটিলিটি মডাল উইন্ডোজ -->
+    <div class="utility-modal-overlay" id="utilityModalOverlay" onclick="if(event.target === this) closeUtilityModal()">
+        <div class="utility-modal-box">
+            <div class="utility-modal-header">
+                <span id="utilityModalTitle"><i class="fas fa-tools"></i> Utility Tool</span>
+                <button onclick="closeUtilityModal()" style="background: none; border: none; color: white; font-size: 14px; cursor: pointer;"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="utility-modal-body" id="utilityModalBody">
+                <!-- Dynamic Content Loaded Here -->
+            </div>
+        </div>
+    </div>
+
     <div class="pdf-tab-bar" id="pdfTabBar"></div>
 
     <div class="acrobat-toolbar">
-        <!-- ব্র্যান্ড এবং ফাইল ওপেন -->
-        <div class="toolbar-section">
+        <!-- ব্র্যান্ড নেম ফ্রিজড বা ফিক্সড সেকশন -->
+        <div class="brand-fixed-container">
             <div class="brand-mini">
                 <img src="logo.png" alt="Logo" onerror="this.style.display='none'">
                 <span>ENGLISH <span>SPUR</span></span>
             </div>
-            <label class="file-upload-btn" title="Open PDF or Image">
-                <i class="fas fa-folder-open"></i> Open PDF/Img
+            <label class="file-upload-btn" title="Open PDF or Image (Ctrl+O)">
+                <i class="fas fa-folder-open"></i> Open <span class="shortcut-badge">Ctrl+O</span>
                 <input type="file" id="pdfUpload" accept=".pdf,image/*" multiple>
             </label>
         </div>
 
         <div class="toolbar-section" style="overflow-x: auto; padding: 2px 0;">
             <!-- 1. Colour and stroke -->
-            <div class="color-picker-wrapper" title="Universal Colors for Green Board & White PDF">
+            <div class="color-picker-wrapper" title="Universal Colors for Writing & Drawing">
                 <span>Color:</span>
                 <span class="fixed-color-btn" style="background-color: #ffffff;" onclick="changeColor('#ffffff', this)" title="White"></span>
                 <span class="fixed-color-btn" style="background-color: #facc15;" onclick="changeColor('#facc15', this)" title="Chalk Yellow"></span>
@@ -324,7 +392,10 @@
                 <span class="fixed-color-btn" style="background-color: #e879f9;" onclick="changeColor('#e879f9', this)" title="Pink"></span>
                 <span class="fixed-color-btn" style="background-color: #c084fc;" onclick="changeColor('#c084fc', this)" title="Purple"></span>
                 <span class="fixed-color-btn" style="background-color: #60a5fa;" onclick="changeColor('#60a5fa', this)" title="Royal Blue"></span>
-                <span class="fixed-color-btn selected" style="background-color: #0f172a;" onclick="changeColor('#0f172a', this)" title="Dark Navy / Black"></span>
+                <span class="fixed-color-btn" style="background-color: #1e3a8a;" onclick="changeColor('#1e3a8a', this)" title="Deep Royal Blue"></span>
+                <span class="fixed-color-btn" style="background-color: #311005;" onclick="changeColor('#311005', this)" title="Rich Dark Brown"></span>
+                <span class="fixed-color-btn" style="background-color: #111827;" onclick="changeColor('#111827', this)" title="Dark Charcoal"></span>
+                <span class="fixed-color-btn selected" style="background-color: #0f172a;" onclick="changeColor('#0f172a', this)" title="Jet Black / Navy"></span>
             </div>
             <select class="size-select" id="sizeSelector" onchange="changeSize(this.value)" title="Tool Size (1px - 30px)">
                 <option value="1">1px</option>
@@ -343,56 +414,67 @@
                 <option value="30">30px</option>
             </select>
 
-            <!-- 2. Pen (Default Active) -->
-            <button class="tool-btn active" id="penBtn" onclick="setMode('pen')"><i class="fas fa-pen"></i> Pen</button>
+            <!-- 2. Pen -->
+            <button class="tool-btn active" id="penBtn" onclick="setMode('pen')" title="Pen (Shortcut: P)"><i class="fas fa-pen"></i> Pen <span class="shortcut-badge">P</span></button>
             
             <!-- 3. Box -->
-            <button class="tool-btn" id="boxBtn" onclick="setMode('box')"><i class="fas fa-vector-square"></i> Box</button>
+            <button class="tool-btn" id="boxBtn" onclick="setMode('box')" title="Box (Shortcut: B)"><i class="fas fa-vector-square"></i> Box <span class="shortcut-badge">B</span></button>
             
             <!-- 4. Line -->
-            <button class="tool-btn" id="lineBtn" onclick="setMode('line')"><i class="fas fa-slash"></i> Line</button>
+            <button class="tool-btn" id="lineBtn" onclick="setMode('line')" title="Line (Shortcut: L)"><i class="fas fa-slash"></i> Line <span class="shortcut-badge">L</span></button>
             
             <!-- 5. Eraser -->
-            <button class="tool-btn" id="eraserBtn" onclick="setMode('eraser')" title="Eraser"><i class="fas fa-eraser"></i> Eraser</button>
+            <button class="tool-btn" id="eraserBtn" onclick="setMode('eraser')" title="Eraser (Shortcut: E)"><i class="fas fa-eraser"></i> Eraser <span class="shortcut-badge">E</span></button>
 
             <!-- 6. Highlight -->
-            <button class="tool-btn" id="highlighterBtn" onclick="setMode('highlighter')" title="Highlighter"><i class="fas fa-highlighter"></i> Highlight</button>
+            <button class="tool-btn" id="highlighterBtn" onclick="setMode('highlighter')" title="Highlighter (Shortcut: H)"><i class="fas fa-highlighter"></i> Highlight <span class="shortcut-badge">H</span></button>
             
             <!-- 7. Circle -->
-            <button class="tool-btn" id="circleBtn" onclick="setMode('circle')" title="Circle"><i class="fas fa-circle"></i> Circle</button>
+            <button class="tool-btn" id="circleBtn" onclick="setMode('circle')" title="Circle (Shortcut: C)"><i class="fas fa-circle"></i> Circle <span class="shortcut-badge">C</span></button>
             
             <!-- 8. Arrow -->
-            <button class="tool-btn" id="arrowBtn" onclick="setMode('arrow')" title="Arrow"><i class="fas fa-location-arrow"></i> Arrow</button>
+            <button class="tool-btn" id="arrowBtn" onclick="setMode('arrow')" title="Arrow (Shortcut: A)"><i class="fas fa-location-arrow"></i> Arrow <span class="shortcut-badge">A</span></button>
 
             <!-- 9. Clear -->
-            <button class="tool-btn danger" onclick="clearCanvas()" title="Clear All"><i class="fas fa-trash"></i> Clear</button>
+            <button class="tool-btn danger" onclick="clearCanvas()" title="Clear All (Delete)"><i class="fas fa-trash"></i> Clear <span class="shortcut-badge">Del</span></button>
             
             <!-- 10. Page Navigator -->
-            <div style="display: flex; align-items: center; gap: 3px; background: #f1f5f9; padding: 2px 6px; border-radius: 6px; border: 1px solid var(--border); flex-shrink: 0;">
-                <button class="tool-btn secondary" style="padding: 3px 6px;" onclick="prevPage()"><i class="fas fa-chevron-left"></i></button>
+            <div style="display: flex; align-items: center; gap: 3px; background: #f1f5f9; padding: 2px 6px; border-radius: 6px; border: 1px solid var(--border); flex-shrink: 0;" title="Prev/Next Page (Left/Right Arrows)">
+                <button class="tool-btn secondary" style="padding: 3px 6px;" onclick="prevPage()" title="Previous Page"><i class="fas fa-chevron-left"></i></button>
                 <span class="page-indicator"><input type="text" id="pageJumpInput" class="page-jump-input" value="1" onchange="jumpToPage(this.value)"> / <span id="page_count">1</span></span>
-                <button class="tool-btn secondary" style="padding: 3px 6px;" onclick="nextPage()"><i class="fas fa-chevron-right"></i></button>
+                <button class="tool-btn secondary" style="padding: 3px 6px;" onclick="nextPage()" title="Next Page"><i class="fas fa-chevron-right"></i></button>
             </div>
 
-            <!-- 11. Fit & Zoom In/Out Percentage (Default 135%) -->
-            <button class="tool-btn secondary" onclick="fitToPage()" title="Fit to Page"><i class="fas fa-expand"></i> Fit</button>
-            <button class="tool-btn secondary" onclick="zoomIn()" title="Zoom In"><i class="fas fa-search-plus"></i></button>
-            <button class="tool-btn secondary" onclick="zoomOut()" title="Zoom Out"><i class="fas fa-search-minus"></i></button>
+            <!-- 11. Fit & Width Buttons -->
+            <button class="tool-btn secondary" onclick="fitToPage()" title="Fit to Page (F)"><i class="fas fa-expand"></i> Fit <span class="shortcut-badge">F</span></button>
+            <button class="tool-btn secondary" onclick="fitToWidth()" title="Page Width Fit (W)"><i class="fas fa-arrows-alt-h"></i> Width <span class="shortcut-badge">W</span></button>
+            <button class="tool-btn secondary" onclick="zoomIn()" title="Zoom In (Ctrl +)"><i class="fas fa-search-plus"></i></button>
+            <button class="tool-btn secondary" onclick="zoomOut()" title="Zoom Out (Ctrl -)"><i class="fas fa-search-minus"></i></button>
             <input type="text" class="zoom-indicator-input" id="zoomIndicatorInput" value="135%" title="Type zoom percentage and press Enter" onchange="jumpToZoom(this.value)" onkeypress="if(event.key==='Enter') jumpToZoom(this.value)">
 
-            <!-- 12. Audio, Video & Google In-App Layer Tools -->
+            <!-- 12. Audio, Video, Notepad, Calculator, Currency, Clock, Fun Facts, Refresh & Google Tools -->
             <div class="toolbar-audio-widget" title="Background Audio Player">
                 <label for="audio-file-input" class="audio-ctrl-btn" title="Upload Audio Files"><i class="fas fa-folder-open"></i></label>
                 <input type="file" id="audio-file-input" accept="audio/*,.mp3,.wav,.aac,.ogg,.flac,.m4a,.wma,.opus" multiple style="display: none;" />
                 <select id="audioTrackSelect" onchange="selectAudioTrack(this.value)">
                     <option value="">Audio...</option>
                 </select>
-                <button class="audio-ctrl-btn" id="toolbarPlayBtn" onclick="togglePlayAudio()" title="Play/Pause"><i class="fas fa-play" id="playIcon"></i></button>
-                <button class="audio-ctrl-btn" onclick="stopAudio()" title="Stop" style="background: #ef4444;"><i class="fas fa-stop"></i></button>
+                <button class="audio-ctrl-btn" id="toolbarPlayBtn" onclick="togglePlayAudio()" title="Play/Pause (Space)"><i class="fas fa-play" id="playIcon"></i></button>
+                <button class="audio-ctrl-btn" onclick="stopAudio()" title="Stop"><i class="fas fa-stop"></i></button>
+                <button class="audio-ctrl-btn" onclick="removeAudioTrack(audioTrackSelect.value)" title="Delete Current Track" style="background: #ef4444;"><i class="fas fa-trash"></i></button>
                 <audio id="audio-element"></audio>
             </div>
-            <button class="tool-btn video-toggle-btn" id="videoToggleBtn" onclick="toggleVideoWindow()" title="Toggle Video Player Mode"><i class="fas fa-video"></i> Video</button>
-            <button class="tool-btn google-btn" onclick="openGoogleModal()" title="Open Google In-App Layer"><i class="fab fa-google"></i> Google</button>
+            <button class="tool-btn video-toggle-btn" id="videoToggleBtn" onclick="toggleVideoWindow()" title="Toggle Video Player Mode (V)"><i class="fas fa-video"></i> Video <span class="shortcut-badge">V</span></button>
+            <button class="tool-btn board-btn" id="notepadToggleBtn" onclick="toggleNotepadWindow()" title="Toggle Fixed Notepad (N)"><i class="fas fa-chalkboard"></i> Notepad <span class="shortcut-badge">N</span></button>
+            
+            <!-- ইউটিলিটি টুলস -->
+            <button class="tool-btn util-btn" onclick="openUtility('calc')" title="Calculator"><i class="fas fa-calculator"></i> Calc</button>
+            <button class="tool-btn util-btn" onclick="openUtility('currency')" title="Currency Converter"><i class="fas fa-exchange-alt"></i> Currency</button>
+            <button class="tool-btn util-btn" onclick="openUtility('clock')" title="World Clock"><i class="fas fa-globe"></i> Clock</button>
+            <button class="tool-btn util-btn" onclick="openUtility('facts')" title="English Fun Facts"><i class="fas fa-lightbulb"></i> Fun Facts</button>
+
+            <button class="tool-btn secondary" onclick="refreshSystemState()" title="Refresh System (R)"><i class="fas fa-sync-alt"></i> Refresh <span class="shortcut-badge">R</span></button>
+            <button class="tool-btn google-btn" onclick="openGoogleModal()" title="Open Google In-App Layer (G)"><i class="fab fa-google"></i> Google <span class="shortcut-badge">G</span></button>
 
             <!-- 13. Theme Selector -->
             <select class="theme-selector" id="themeSelector" onchange="setTheme(this.value)" title="Theme Selector">
@@ -404,12 +486,10 @@
             </select>
 
             <!-- 14. Baki Gulo -->
-            <button class="tool-btn" id="mouseBtn" onclick="setMode('mouse')" title="Pan Tool"><i class="fas fa-hand-paper"></i> Pan</button>
-            <button class="tool-btn" id="textToolBtn" onclick="setMode('text')" title="Note / Free Type"><i class="fas fa-font"></i> Note</button>
-            <button class="tool-btn secondary" onclick="undoCanvas()" title="Undo"><i class="fas fa-undo"></i></button>
-            <button class="tool-btn secondary" onclick="redoCanvas()" title="Redo"><i class="fas fa-redo"></i></button>
-            <button class="tool-btn board-btn" onclick="openWhiteboard('green')" title="Green Board Mode"><i class="fas fa-chalkboard"></i> Green Board</button>
-            <button class="tool-btn board-btn" style="background: #b45309;" onclick="openWhiteboard('line')" title="Line Page Mode"><i class="fas fa-book"></i> Line Page</button>
+            <button class="tool-btn" id="mouseBtn" onclick="setMode('mouse')" title="Pan Tool (M)"><i class="fas fa-hand-paper"></i> Pan <span class="shortcut-badge">M</span></button>
+            <button class="tool-btn" id="textToolBtn" onclick="setMode('text')" title="Note / Free Type (T)"><i class="fas fa-font"></i> Note <span class="shortcut-badge">T</span></button>
+            <button class="tool-btn secondary" onclick="undoCanvas()" title="Undo (Ctrl+Z)"><i class="fas fa-undo"></i> <span class="shortcut-badge">Ctrl+Z</span></button>
+            <button class="tool-btn secondary" onclick="redoCanvas()" title="Redo (Ctrl+Y)"><i class="fas fa-redo"></i> <span class="shortcut-badge">Ctrl+Y</span></button>
         </div>
     </div>
 
@@ -463,6 +543,31 @@
                 </div>
             </div>
         </div>
+
+        <!-- সাইড ফিক্সড নোটপ্যাড প্যানেল -->
+        <div class="side-video-panel" id="sideNotepadPanel">
+            <div class="video-header-bar" style="background: linear-gradient(135deg, #0d9488, #065f46);">
+                <span><i class="fas fa-chalkboard"></i> Writing Board (Scrollable)</span>
+                <button onclick="toggleNotepadWindow()" style="background: none; border: none; font-size: 14px; cursor: pointer; color: white; padding: 2px 6px;"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="video-scroll-content" style="padding: 10px; display: flex; flex-direction: column; height: 100%;">
+                <div class="media-card" style="flex-grow: 1; display: flex; flex-direction: column; background: #ffffff; border-color: #0d9488; position: relative; overflow: hidden;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; padding: 4px; background: #f1f5f9; border-radius: 6px; flex-shrink: 0;">
+                        <div style="display: flex; gap: 4px; align-items: center;">
+                            <span style="font-size: 10.5px; font-weight: 800; color: #0f172a;">Bg:</span>
+                            <span class="fixed-color-btn" style="background-color: #ffffff; border: 1px solid #cbd5e1;" onclick="changeNotepadBg('#ffffff')" title="Pure White"></span>
+                            <span class="fixed-color-btn" style="background-color: #fef9c3;" onclick="changeNotepadBg('#fef9c3')" title="Soft Yellow"></span>
+                            <span class="fixed-color-btn" style="background-color: #f0fdf4;" onclick="changeNotepadBg('#f0fdf4')" title="Light Pastel Green"></span>
+                            <span class="fixed-color-btn" style="background-color: #f8fafc;" onclick="changeNotepadBg('#f8fafc')" title="Light Gray"></span>
+                        </div>
+                        <button class="tool-btn danger" style="padding: 2px 6px; font-size: 10px;" onclick="clearNotepadCanvas()"><i class="fas fa-trash"></i> Clear</button>
+                    </div>
+                    <div id="notepadScrollArea" style="position: relative; flex-grow: 1; width: 100%; background: #ffffff; border-radius: 6px; overflow-y: auto; overflow-x: hidden; cursor: crosshair; border: 1px solid var(--border);">
+                        <canvas id="notepadCanvas" style="display: block; width: 100%; height: 2000px; touch-action: none;"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -494,6 +599,189 @@
                 pendingAction();
             }
             pendingAction = null;
+        }
+
+        function refreshSystemState() {
+            showConfirmDialog("সিস্টেম রিফ্রেশ", "আপনি কি সিস্টেমটি রিফ্রেশ করতে চান? (আপনার লগইন এবং বর্তমান সেশন সুরক্ষিত থাকবে)", () => {
+                let tab = getCurrentTab();
+                if (tab) {
+                    saveCurrentPageData(tab);
+                    renderPage(tab.pageNum);
+                }
+                if (typeof initNotepadCanvas === 'function') {
+                    initNotepadCanvas();
+                }
+            });
+        }
+
+        /* ইউটিলিটি টুলস লজিক (Calculator, Currency Converter, World Clock with Date/Day, and Date-based Daily Fun Facts) */
+        function openUtility(type) {
+            let titleEl = document.getElementById('utilityModalTitle');
+            let bodyEl = document.getElementById('utilityModalBody');
+            let modal = document.getElementById('utilityModalOverlay');
+            modal.classList.add('active');
+
+            if (type === 'calc') {
+                titleEl.innerHTML = '<i class="fas fa-calculator"></i> Calculator';
+                bodyEl.innerHTML = `
+                    <input type="text" id="calcScreen" class="calc-screen" readonly value="0">
+                    <div class="calc-grid">
+                        <button class="calc-btn operator" onclick="calcClear()">C</button>
+                        <button class="calc-btn operator" onclick="calcAppend('/')">/</button>
+                        <button class="calc-btn operator" onclick="calcAppend('*')">×</button>
+                        <button class="calc-btn operator" onclick="calcBack()">⌫</button>
+                        <button class="calc-btn" onclick="calcAppend('7')">7</button>
+                        <button class="calc-btn" onclick="calcAppend('8')">8</button>
+                        <button class="calc-btn" onclick="calcAppend('9')">9</button>
+                        <button class="calc-btn operator" onclick="calcAppend('-')">-</button>
+                        <button class="calc-btn" onclick="calcAppend('4')">4</button>
+                        <button class="calc-btn" onclick="calcAppend('5')">5</button>
+                        <button class="calc-btn" onclick="calcAppend('6')">6</button>
+                        <button class="calc-btn operator" onclick="calcAppend('+')">+</button>
+                        <button class="calc-btn" onclick="calcAppend('1')">1</button>
+                        <button class="calc-btn" onclick="calcAppend('2')">2</button>
+                        <button class="calc-btn" onclick="calcAppend('3')">3</button>
+                        <button class="calc-btn operator" style="grid-row: span 2; height: 100%; background: var(--primary); color: white;" onclick="calcEval()">=</button>
+                        <button class="calc-btn" style="grid-column: span 2;" onclick="calcAppend('0')">0</button>
+                        <button class="calc-btn" onclick="calcAppend('.')">.</button>
+                    </div>
+                `;
+            } else if (type === 'currency') {
+                titleEl.innerHTML = '<i class="fas fa-exchange-alt"></i> Currency Converter';
+                bodyEl.innerHTML = `
+                    <div class="util-input-group">
+                        <label>Amount:</label>
+                        <input type="number" id="currAmount" value="1" oninput="convertCurrency()">
+                    </div>
+                    <div class="util-input-group">
+                        <label>From:</label>
+                        <select id="currFrom" onchange="convertCurrency()">
+                            <option value="INR">INR (₹)</option>
+                            <option value="USD" selected>USD ($)</option>
+                            <option value="EUR">EUR (€)</option>
+                            <option value="GBP">GBP (£)</option>
+                            <option value="CAD">CAD ($)</option>
+                            <option value="AUD">AUD ($)</option>
+                            <option value="JPY">JPY (¥)</option>
+                        </select>
+                    </div>
+                    <div class="util-input-group">
+                        <label>To:</label>
+                        <select id="currTo" onchange="convertCurrency()">
+                            <option value="INR" selected>INR (₹)</option>
+                            <option value="USD">USD ($)</option>
+                            <option value="EUR">EUR (€)</option>
+                            <option value="GBP">GBP (£)</option>
+                            <option value="CAD">CAD ($)</option>
+                            <option value="AUD">AUD ($)</option>
+                            <option value="JPY">JPY (¥)</option>
+                        </select>
+                    </div>
+                    <div id="currResult" style="background: #e2e8f0; padding: 14px; border-radius: 8px; font-weight: 800; font-size: 16px; text-align: center; color: var(--primary); margin-top: 4px;">
+                        Result: 83.50 INR
+                    </div>
+                `;
+                convertCurrency();
+            } else if (type === 'clock') {
+                titleEl.innerHTML = '<i class="fas fa-globe"></i> World Clock & Date';
+                bodyEl.innerHTML = `
+                    <div class="clock-card"><div style="display:flex; align-items:center;"><span class="clock-flag">🇮🇳</span><div class="clock-info"><span class="clock-country">India (Kolkata)</span><span class="clock-date" id="dateKolkata">--/--/----</span></div></div><span class="clock-time" id="clockKolkata">--:--:--</span></div>
+                    <div class="clock-card"><div style="display:flex; align-items:center;"><span class="clock-flag">🇧🇩</span><div class="clock-info"><span class="clock-country">Bangladesh (Dhaka)</span><span class="clock-date" id="dateDhaka">--/--/----</span></div></div><span class="clock-time" id="clockDhaka">--:--:--</span></div>
+                    <div class="clock-card"><div style="display:flex; align-items:center;"><span class="clock-flag">🇺🇸</span><div class="clock-info"><span class="clock-country">USA (New York)</span><span class="clock-date" id="dateNY">--/--/----</span></div></div><span class="clock-time" id="clockNY">--:--:--</span></div>
+                    <div class="clock-card"><div style="display:flex; align-items:center;"><span class="clock-flag">🇬🇧</span><div class="clock-info"><span class="clock-country">UK (London)</span><span class="clock-date" id="dateLondon">--/--/----</span></div></div><span class="clock-time" id="clockLondon">--:--:--</span></div>
+                    <div class="clock-card"><div style="display:flex; align-items:center;"><span class="clock-flag">🇦🇺</span><div class="clock-info"><span class="clock-country">Australia (Sydney)</span><span class="clock-date" id="dateSydney">--/--/----</span></div></div><span class="clock-time" id="clockSydney">--:--:--</span></div>
+                    <div class="clock-card"><div style="display:flex; align-items:center;"><span class="clock-flag">🇨🇦</span><div class="clock-info"><span class="clock-country">Canada (Toronto)</span><span class="clock-date" id="dateToronto">--/--/----</span></div></div><span class="clock-time" id="clockToronto">--:--:--</span></div>
+                    <div class="clock-card"><div style="display:flex; align-items:center;"><span class="clock-flag">🇦🇪</span><div class="clock-info"><span class="clock-country">UAE (Dubai)</span><span class="clock-date" id="dateDubai">--/--/----</span></div></div><span class="clock-time" id="clockDubai">--:--:--</span></div>
+                    <div class="clock-card"><div style="display:flex; align-items:center;"><span class="clock-flag">🇯🇵</span><div class="clock-info"><span class="clock-country">Japan (Tokyo)</span><span class="clock-date" id="dateTokyo">--/--/----</span></div></div><span class="clock-time" id="clockTokyo">--:--:--</span></div>
+                `;
+                updateWorldClocks();
+            } else if (type === 'facts') {
+                titleEl.innerHTML = '<i class="fas fa-lightbulb"></i> Daily English Fun Facts';
+                
+                const dailyFactsDB = [
+                    { title: "Pangram Wonder", text: 'The sentence "The quick brown fox jumps over the lazy dog" contains every single letter of the alphabet!' },
+                    { title: "Shortest Sentence", text: '"Go!" is officially recognized as the shortest grammatically correct sentence in the English language.' },
+                    { title: "The Word 'Set'", text: 'The word "set" holds the world record for having the highest number of separate definitions in the dictionary.' },
+                    { title: "Rapid Growth", text: 'Approximately one new word is officially added to the English language dictionary every two hours!' },
+                    { title: "Shakespeare's Impact", text: 'William Shakespeare invented over 1,700 common words that we still use today by changing nouns to verbs!' },
+                    { title: "Most Common Letter", text: 'The letter "E" is by far the most commonly used letter in the entire English alphabet system.' },
+                    { title: "Ghost Words", text: 'The English dictionary once contained a completely fake word for seven years due to a printing typo ("Dord").' },
+                    { title: "Oldest English Word", text: 'Words like "town", "good", "water", and "man" are among the oldest surviving words in the English language.' }
+                ];
+
+                let dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
+                let todayFact = dailyFactsDB[dayOfYear % dailyFactsDB.length];
+                let secondFact = dailyFactsDB[(dayOfYear + 1) % dailyFactsDB.length];
+
+                bodyEl.innerHTML = `
+                    <div style="background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; padding: 16px; border-radius: 12px; margin-bottom: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                        <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 1px; opacity: 0.85; font-weight: 800; margin-bottom: 4px;"><i class="fas fa-calendar-day"></i> Today's Special Fact</div>
+                        <div style="font-size: 14px; font-weight: 800; margin-bottom: 6px;">${todayFact.title}</div>
+                        <div style="font-size: 13px; font-weight: 600; line-height: 1.5;">${todayFact.text}</div>
+                    </div>
+                    <div class="fact-card"><i class="fas fa-lightbulb fact-icon"></i><div class="fact-content"><span class="fact-title">Bonus Fact</span><span>${secondFact.text}</span></div></div>
+                    <div class="fact-card"><i class="fas fa-star fact-icon"></i><div class="fact-content"><span class="fact-title">Language Tip</span><span>Consistent daily practice of reading English articles or PDFs for just 15 minutes doubles fluency speed!</span></div></div>
+                `;
+            }
+        }
+
+        function closeUtilityModal() {
+            document.getElementById('utilityModalOverlay').classList.remove('active');
+        }
+
+        // ক্যালকুলেটর ফাংশনস
+        let calcVal = "0";
+        function calcClear() { calcVal = "0"; document.getElementById('calcScreen').value = calcVal; }
+        function calcAppend(char) {
+            if (calcVal === "0" && char !== '.') calcVal = char;
+            else calcVal += char;
+            document.getElementById('calcScreen').value = calcVal;
+        }
+        function calcBack() {
+            calcVal = calcVal.length > 1 ? calcVal.slice(0, -1) : "0";
+            document.getElementById('calcScreen').value = calcVal;
+        }
+        function calcEval() {
+            try { calcVal = eval(calcVal).toString(); } catch { calcVal = "Error"; }
+            document.getElementById('calcScreen').value = calcVal;
+        }
+
+        // কারেন্সি কনভার্টার ফাংশনস (USD Based Rates)
+        function convertCurrency() {
+            let amount = parseFloat(document.getElementById('currAmount').value) || 0;
+            let from = document.getElementById('currFrom').value;
+            let to = document.getElementById('currTo').value;
+            
+            let rates = { USD: 1, INR: 83.5, EUR: 0.92, GBP: 0.79, CAD: 1.35, AUD: 1.52, JPY: 155.0 };
+            let inUSD = amount / rates[from];
+            let finalVal = inUSD * rates[to];
+            document.getElementById('currResult').textContent = `Result: ${finalVal.toFixed(2)} ${to}`;
+        }
+
+        // ওয়ার্ল্ড ক্লক লজিক (Time, Date & Day)
+        function updateWorldClocks() {
+            setInterval(() => {
+                let now = new Date();
+                try {
+                    updateSingleClock('Kolkata', 'Asia/Kolkata', now);
+                    updateSingleClock('Dhaka', 'Asia/Dhaka', now);
+                    updateSingleClock('NY', 'America/New_York', now);
+                    updateSingleClock('London', 'Europe/London', now);
+                    updateSingleClock('Sydney', 'Australia/Sydney', now);
+                    updateSingleClock('Toronto', 'America/Toronto', now);
+                    updateSingleClock('Dubai', 'Asia/Dubai', now);
+                    updateSingleClock('Tokyo', 'Asia/Tokyo', now);
+                } catch(e) {}
+            }, 1000);
+        }
+
+        function updateSingleClock(id, tz, now) {
+            let timeStr = now.toLocaleTimeString('en-US', { timeZone: tz, hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+            let dateStr = now.toLocaleDateString('en-GB', { timeZone: tz, weekday: 'short', day: '2-digit', month: 'short', year: 'numeric' });
+            let tEl = document.getElementById('clock' + id);
+            let dEl = document.getElementById('date' + id);
+            if(tEl) tEl.textContent = timeStr;
+            if(dEl) dEl.textContent = dateStr;
         }
 
         // Free space mouse panning support on pdfViewArea
@@ -528,17 +816,105 @@
             if (panel.classList.contains('active')) {
                 btn.classList.add('active-video');
                 if (tab) {
-                    tab.scale = 1.2; // 100% zoom scale when video opens
+                    tab.scale = 1.2; 
                     updateZoomIndicator(tab.scale);
                     renderPage(tab.pageNum);
                 }
             } else {
                 btn.classList.remove('active-video');
                 if (tab) {
-                    tab.scale = 1.62; // Restore to default 135% (1.35 * 1.2 = 1.62) when video closes
+                    tab.scale = 1.62; 
                     updateZoomIndicator(tab.scale);
                     renderPage(tab.pageNum);
                 }
+            }
+        }
+
+        let isNotepadOpen = false;
+        function toggleNotepadWindow() {
+            let panel = document.getElementById('sideNotepadPanel');
+            isNotepadOpen = !isNotepadOpen;
+            if (isNotepadOpen) {
+                panel.classList.add('active');
+                initNotepadCanvas();
+            } else {
+                panel.classList.remove('active');
+            }
+        }
+
+        let notepadCanvas, notepadCtx, notepadContainer;
+        function initNotepadCanvas() {
+            notepadCanvas = document.getElementById('notepadCanvas');
+            notepadContainer = document.getElementById('notepadScrollArea');
+            if(!notepadCanvas) return;
+            notepadCtx = notepadCanvas.getContext('2d');
+            
+            let dpr = window.devicePixelRatio || 1;
+            let displayWidth = notepadContainer.clientWidth - 5;
+            let displayHeight = 2000; 
+
+            notepadCanvas.width = displayWidth * dpr;
+            notepadCanvas.height = displayHeight * dpr;
+            notepadCanvas.style.width = displayWidth + 'px';
+            notepadCanvas.style.height = displayHeight + 'px';
+
+            notepadCtx.scale(dpr, dpr);
+        }
+
+        function changeNotepadBg(color) {
+            let area = document.getElementById('notepadScrollArea');
+            if(area) area.style.backgroundColor = color;
+        }
+
+        let isNotepadDrawing = false, notepadLastX = 0, notepadLastY = 0;
+
+        function getNotepadPos(e) {
+            const rect = notepadCanvas.getBoundingClientRect();
+            let clientX = e.clientX || (e.touches && e.touches.length > 0 ? e.touches[0].clientX : 0);
+            let clientY = e.clientY || (e.touches && e.touches.length > 0 ? e.touches[0].clientY : 0);
+            return {
+                x: clientX - rect.left,
+                y: clientY - rect.top
+            };
+        }
+
+        document.addEventListener('pointerdown', (e) => {
+            if (e.target.id === 'notepadCanvas') {
+                isNotepadDrawing = true;
+                let pos = getNotepadPos(e);
+                notepadLastX = pos.x;
+                notepadLastY = pos.y;
+                e.preventDefault();
+            }
+        });
+
+        document.addEventListener('pointermove', (e) => {
+            if (!isNotepadDrawing || !isNotepadOpen || !notepadCanvas) return;
+            let pos = getNotepadPos(e);
+
+            notepadCtx.strokeStyle = currentColor;
+            let pressure = (e.pressure && e.pressure > 0) ? e.pressure : 0.5;
+            notepadCtx.lineWidth = currentLineWidth * (e.pointerType === 'pen' ? (pressure * 1.5 + 0.5) : 1);
+            notepadCtx.lineJoin = 'round';
+            notepadCtx.lineCap = 'round';
+
+            notepadCtx.beginPath();
+            notepadCtx.moveTo(notepadLastX, notepadLastY);
+            notepadCtx.lineTo(pos.x, pos.y);
+            notepadCtx.stroke();
+
+            notepadLastX = pos.x;
+            notepadLastY = pos.y;
+            e.preventDefault();
+        });
+
+        document.addEventListener('pointerup', () => {
+            isNotepadDrawing = false;
+        });
+
+        function clearNotepadCanvas() {
+            if (notepadCtx && notepadCanvas) {
+                notepadCtx.clearRect(0, 0, notepadCanvas.width, notepadCanvas.height);
             }
         }
 
@@ -563,7 +939,6 @@
         let pdfCanvas = document.getElementById('pdfCanvas'), pdfCtx = pdfCanvas.getContext('2d'),
             drawCanvas = document.getElementById('drawCanvas'), drawCtx = drawCanvas.getContext('2d');
 
-        // By default: Pen mode, Black Ink (#0f172a), default scale for 135% is 1.62 (1.35 * 1.2)
         let isDrawing = false, currentMode = 'pen', currentColor = '#0f172a', currentBgColor = '#ffffff', currentLineWidth = 2, highlighterOpacity = 0.35, lastX = 0, lastY = 0, startX = 0, startY = 0, snapshot = null;
 
         function setTheme(themeName) {
@@ -605,33 +980,45 @@
             }
         }
 
-        function openWhiteboard(boardType) {
-            let tabId = 'board_' + boardType + '_' + Date.now();
-            let tabName = boardType === 'green' ? 'Green Board.board' : 'Line Page.board';
-            let isVideoOpen = document.getElementById('sideVideoPanel').classList.contains('active');
-            let defaultScale = isVideoOpen ? 1.2 : 1.62; // 135% default (1.62)
-            let newTab = { id: tabId, type: 'board', boardType: boardType, name: tabName, pageNum: 1, scale: defaultScale, drawingsVector: {}, textNotes: {}, historyStacks: {}, redoStacks: {} };
-            openTabs.push(newTab);
-            switchTab(tabId);
-        }
-
         function fitToPage() {
             let tab = getCurrentTab();
             if (!tab) return;
-            if (tab.type === 'board') {
-                tab.scale = 1.5;
-                updateZoomIndicator(tab.scale);
-                renderPage(tab.pageNum);
-                return;
-            }
             saveCurrentPageData(tab);
             let viewArea = document.getElementById('pdfViewArea');
             let availWidth = viewArea.clientWidth - 50;
+            let availHeight = viewArea.clientHeight - 50;
+            
+            if (tab.type === 'image') {
+                let img = tab.imgElement;
+                let scaleX = availWidth / img.width;
+                let scaleY = availHeight / img.height;
+                tab.scale = Math.min(scaleX, scaleY);
+                updateZoomIndicator(tab.scale);
+                renderPage(tab.pageNum);
+            } else {
+                tab.pdfDoc.getPage(tab.pageNum).then(function(page) {
+                    let unscaledViewport = page.getViewport({ scale: 1.0 });
+                    let scaleX = availWidth / unscaledViewport.width;
+                    let scaleY = availHeight / unscaledViewport.height;
+                    tab.scale = Math.min(scaleX, scaleY);
+                    updateZoomIndicator(tab.scale);
+                    renderPage(tab.pageNum);
+                });
+            }
+        }
+
+        function fitToWidth() {
+            let tab = getCurrentTab();
+            if (!tab) return;
+            saveCurrentPageData(tab);
+            let viewArea = document.getElementById('pdfViewArea');
+            let availWidth = viewArea.clientWidth - 40;
             
             if (tab.type === 'image') {
                 let img = tab.imgElement;
                 tab.scale = availWidth / img.width;
                 updateZoomIndicator(tab.scale);
+                renderPage(tab.pageNum);
             } else {
                 tab.pdfDoc.getPage(tab.pageNum).then(function(page) {
                     let unscaledViewport = page.getViewport({ scale: 1.0 });
@@ -639,9 +1026,7 @@
                     updateZoomIndicator(tab.scale);
                     renderPage(tab.pageNum);
                 });
-                return;
             }
-            renderPage(tab.pageNum);
         }
 
         const pdfUploadInput = document.getElementById('pdfUpload');
@@ -653,7 +1038,7 @@
                 files.forEach(file => {
                     let tabId = 'tab_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5);
                     let isVideoOpen = document.getElementById('sideVideoPanel').classList.contains('active');
-                    let defaultScale = isVideoOpen ? 1.2 : 1.62; // 135% default scale (1.62)
+                    let defaultScale = isVideoOpen ? 1.2 : 1.62; 
                     if (file.type === 'application/pdf') {
                         let fileReader = new FileReader();
                         fileReader.onload = function() {
@@ -717,7 +1102,7 @@
             let tabBar = document.getElementById('pdfTabBar');
             tabBar.innerHTML = '';
             openTabs.forEach(tab => {
-                let iconClass = tab.type === 'image' ? 'fa-file-image text-emerald-600' : (tab.type === 'board' ? 'fa-chalkboard text-teal-600' : 'fa-file-pdf text-red-500');
+                let iconClass = tab.type === 'image' ? 'fa-file-image text-emerald-600' : 'fa-file-pdf text-red-500';
                 let tabEl = document.createElement('div');
                 tabEl.className = `pdf-tab ${tab.id === activeTabId ? 'active' : ''}`;
                 tabEl.innerHTML = `<i class="fas ${iconClass}" style="flex-shrink: 0;"></i> <span title="${tab.name}">${tab.name}</span> <i class="fas fa-times close-tab" onclick="closeTab('${tab.id}', event)" title="Close"></i>`;
@@ -767,7 +1152,6 @@
             redrawVectorCanvas(tab);
         }
 
-        // এক্স ভিউ এবং ওয়াই ভিউ অফসেট ম্যাট্রিক্স ম্যাপিং ইঞ্জিন (অ্যানোটেশন ১০০% ফিক্সড রাখবে)
         function redrawVectorCanvas(tab) {
             drawCtx.clearRect(0, 0, drawCanvas.width, drawCanvas.height);
             let paths = tab.drawingsVector[tab.pageNum];
@@ -845,7 +1229,7 @@
             let tab = getCurrentTab();
             if (!tab) return;
             
-            document.getElementById('page_count').textContent = (tab.type === 'image' || tab.type === 'board') ? '1' : tab.pdfDoc.numPages;
+            document.getElementById('page_count').textContent = tab.type === 'image' ? '1' : tab.pdfDoc.numPages;
             document.getElementById('pageJumpInput').value = num;
 
             document.querySelectorAll('.pdf-text-note').forEach(n => n.remove());
@@ -855,27 +1239,7 @@
 
             let outputScale = window.devicePixelRatio || 1;
 
-            if (tab.type === 'board') {
-                if (tab.boardType === 'green') container.classList.add('greenboard');
-                else if (tab.boardType === 'line') container.classList.add('linepage');
-
-                let bWidth = 1100 * (tab.scale / 1.5);
-                let bHeight = 800 * (tab.scale / 1.5);
-
-                pdfCanvas.width = Math.floor(bWidth * outputScale);
-                pdfCanvas.height = Math.floor(bHeight * outputScale);
-                pdfCanvas.style.width = Math.floor(bWidth) + "px";
-                pdfCanvas.style.height = Math.floor(bHeight) + "px";
-
-                drawCanvas.width = pdfCanvas.width;
-                drawCanvas.height = pdfCanvas.height;
-                drawCanvas.style.width = pdfCanvas.style.width;
-                drawCanvas.style.height = pdfCanvas.style.height;
-
-                pdfCtx.clearRect(0, 0, pdfCanvas.width, pdfCanvas.height);
-                redrawVectorCanvas(tab);
-                restoreNotesOnly(tab, num);
-            } else if (tab.type === 'image') {
+            if (tab.type === 'image') {
                 let img = tab.imgElement;
                 let vWidth = img.width * (tab.scale / 1.2);
                 let vHeight = img.height * (tab.scale / 1.2);
@@ -946,17 +1310,17 @@
 
         function prevPage() { 
             let tab = getCurrentTab(); 
-            if (!tab || tab.type === 'image' || tab.type === 'board' || tab.pageNum <= 1) return; 
+            if (!tab || tab.type === 'image' || tab.pageNum <= 1) return; 
             saveCurrentPageData(tab); tab.pageNum--; renderPage(tab.pageNum); 
         }
         function nextPage() { 
             let tab = getCurrentTab(); 
-            if (!tab || tab.type === 'image' || tab.type === 'board' || tab.pageNum >= tab.pdfDoc.numPages) return; 
+            if (!tab || tab.type === 'image' || tab.pageNum >= tab.pdfDoc.numPages) return; 
             saveCurrentPageData(tab); tab.pageNum++; renderPage(tab.pageNum); 
         }
         function jumpToPage(val) {
             let tab = getCurrentTab();
-            if (!tab || tab.type === 'image' || tab.type === 'board') return;
+            if (!tab || tab.type === 'image') return;
             let num = parseInt(val);
             if (num >= 1 && num <= tab.pdfDoc.numPages) { saveCurrentPageData(tab); tab.pageNum = num; renderPage(tab.pageNum); }
             else { document.getElementById('pageJumpInput').value = tab.pageNum; }
@@ -972,6 +1336,7 @@
                 renderPage(tab.pageNum); 
             } 
         }
+
         function zoomOut() { 
             let tab = getCurrentTab();
             if (!tab) return;
@@ -1005,7 +1370,6 @@
             tab.textNotes[tab.pageNum] = [];
         }
 
-        // X View এবং Y View নিখুঁত ক্যানভাস পজিশন ক্যালকুলেটর
         function getCanvasPos(e) {
             const rect = drawCanvas.getBoundingClientRect();
             let clientX = e.clientX || (e.touches && e.touches.length > 0 ? e.touches[0].clientX : 0);
@@ -1137,18 +1501,34 @@
         function eraseAt(x, y, tab) {
             if (!tab || !tab.drawingsVector[tab.pageNum]) return;
             let paths = tab.drawingsVector[tab.pageNum];
-            let eraserRadius = Math.max(10, currentLineWidth * 3);
+            let eraserRadius = Math.max(15, currentLineWidth * 4);
             let initialLength = paths.length;
 
             tab.drawingsVector[tab.pageNum] = paths.filter(cmd => {
                 if (cmd.mode === 'pen' && cmd.points) {
                     let hit = cmd.points.some(p => Math.hypot(p.x - x, p.y - y) <= eraserRadius);
                     return !hit;
-                } else if (['line', 'box', 'circle', 'arrow', 'highlighter'].includes(cmd.mode)) {
-                    let hitStart = Math.hypot(cmd.startX - x, cmd.startY - y) <= eraserRadius;
-                    let hitEnd = Math.hypot(cmd.endX - x, cmd.endY - y) <= eraserRadius;
-                    let hitMid = Math.hypot(((cmd.startX + cmd.endX) / 2) - x, ((cmd.startY + cmd.endY) / 2) - y) <= eraserRadius;
-                    return !(hitStart || hitEnd || hitMid);
+                } else if (['line', 'arrow', 'highlighter'].includes(cmd.mode)) {
+                    let A = x - cmd.startX;
+                    let B = y - cmd.startY;
+                    let C = cmd.endX - cmd.startX;
+                    let D = cmd.endY - cmd.startY;
+                    let dot = A * C + B * D;
+                    let lenSq = C * C + D * D;
+                    let param = lenSq !== 0 ? dot / lenSq : -1;
+                    let xx, yy;
+                    if (param < 0) { xx = cmd.startX; yy = cmd.startY; }
+                    else if (param > 1) { xx = cmd.endX; yy = cmd.endY; }
+                    else { xx = cmd.startX + param * C; yy = cmd.startY + param * D; }
+                    let dist = Math.hypot(x - xx, y - yy);
+                    return dist > eraserRadius;
+                } else if (['box', 'circle'].includes(cmd.mode)) {
+                    let minX = Math.min(cmd.startX, cmd.endX);
+                    let maxX = Math.max(cmd.startX, cmd.endX);
+                    let minY = Math.min(cmd.startY, cmd.endY);
+                    let maxY = Math.max(cmd.startY, cmd.endY);
+                    let hitInside = (x >= minX - eraserRadius && x <= maxX + eraserRadius && y >= minY - eraserRadius && y <= maxY + eraserRadius);
+                    return !hitInside;
                 }
                 return true;
             });
@@ -1251,6 +1631,69 @@
         drawCanvas.addEventListener('touchend', endPosition, { passive: false });
         drawCanvas.addEventListener('touchmove', draw, { passive: false });
 
+        /* গ্লোবাল কিবোর্ড শর্টকাট লিসেনার */
+        window.addEventListener('keydown', (e) => {
+            if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) return;
+
+            let key = e.key.toLowerCase();
+
+            if (e.ctrlKey && key === 'o') {
+                e.preventDefault();
+                document.getElementById('pdfUpload').click();
+            } else if (e.ctrlKey && key === 'z') {
+                e.preventDefault();
+                undoCanvas();
+            } else if (e.ctrlKey && key === 'y') {
+                e.preventDefault();
+                redoCanvas();
+            } else if (e.ctrlKey && (e.key === '+' || e.key === '=')) {
+                e.preventDefault();
+                zoomIn();
+            } else if (e.ctrlKey && e.key === '-') {
+                e.preventDefault();
+                zoomOut();
+            } else if (key === 'p') {
+                setMode('pen');
+            } else if (key === 'b') {
+                setMode('box');
+            } else if (key === 'l') {
+                setMode('line');
+            } else if (key === 'e') {
+                setMode('eraser');
+            } else if (key === 'h') {
+                setMode('highlighter');
+            } else if (key === 'c') {
+                setMode('circle');
+            } else if (key === 'a') {
+                setMode('arrow');
+            } else if (key === 'm') {
+                setMode('mouse');
+            } else if (key === 't') {
+                setMode('text');
+            } else if (key === 'f') {
+                fitToPage();
+            } else if (key === 'w') {
+                fitToWidth();
+            } else if (key === 'v') {
+                toggleVideoWindow();
+            } else if (key === 'n') {
+                toggleNotepadWindow();
+            } else if (key === 'r') {
+                refreshSystemState();
+            } else if (key === 'g') {
+                openGoogleModal();
+            } else if (e.key === 'Delete') {
+                clearCanvas();
+            } else if (e.key === 'ArrowLeft') {
+                prevPage();
+            } else if (e.key === 'ArrowRight') {
+                nextPage();
+            } else if (e.code === 'Space') {
+                e.preventDefault();
+                togglePlayAudio();
+            }
+        });
+
         let playlistData = [];
         let currentTrackIndex = 0;
         const audioElement = document.getElementById('audio-element');
@@ -1266,14 +1709,7 @@
             showConfirmDialog("অডিও ফাইল যুক্তকরণ", `${files.length} টি নতুন অডিও ফাইল লিস্টে যুক্ত করতে চান?`, () => {
                 let newTracks = files.map((file, index) => ({ id: playlistData.length + index + 1, title: file.name, src: URL.createObjectURL(file) }));
                 playlistData = playlistData.concat(newTracks);
-                
-                audioTrackSelect.innerHTML = '<option value="">Audio...</option>';
-                playlistData.forEach((track, index) => {
-                    let opt = document.createElement('option');
-                    opt.value = index;
-                    opt.textContent = track.title;
-                    audioTrackSelect.appendChild(opt);
-                });
+                updateAudioSelectUI();
                 if (playlistData.length > 0 && audioTrackSelect.value === "") {
                     audioTrackSelect.value = 0;
                     currentTrackIndex = 0;
@@ -1285,13 +1721,43 @@
             audioFileInput.value = '';
         });
 
+        function updateAudioSelectUI() {
+            audioTrackSelect.innerHTML = '<option value="">Audio...</option>';
+            playlistData.forEach((track, index) => {
+                let opt = document.createElement('option');
+                opt.value = index;
+                opt.textContent = track.title;
+                audioTrackSelect.appendChild(opt);
+            });
+            if(playlistData[currentTrackIndex]) {
+                audioTrackSelect.value = currentTrackIndex;
+            }
+        }
+
         function selectAudioTrack(index) {
             if (index === "") return;
             currentTrackIndex = parseInt(index);
             let track = playlistData[currentTrackIndex];
-            audioElement.src = track.src;
+            if(track) {
+                audioElement.src = track.src;
+                audioElement.pause();
+                playIcon.className = "fas fa-play";
+            }
+        }
+
+        function removeAudioTrack(indexStr) {
+            if (indexStr === "" || playlistData.length === 0) return;
+            let idx = parseInt(indexStr);
+            playlistData.splice(idx, 1);
             audioElement.pause();
+            audioElement.src = "";
             playIcon.className = "fas fa-play";
+            currentTrackIndex = 0;
+            updateAudioSelectUI();
+            if(playlistData.length > 0) {
+                audioTrackSelect.value = 0;
+                selectAudioTrack(0);
+            }
         }
 
         function togglePlayAudio() {
@@ -1341,14 +1807,36 @@
             videoPlaylistData.forEach((video, index) => {
                 let item = document.createElement('div');
                 item.className = `playlist-item ${index === currentVideoIndex ? 'active' : ''}`;
-                item.innerHTML = `<span>🎬 ${video.title}</span> <span class="page-tag">P. ${video.page}</span>`;
-                item.onclick = () => { loadVideo(index); };
+                item.innerHTML = `<span>🎬 ${video.title}</span> <div class="playlist-item-actions"><span class="page-tag">P. ${video.page}</span><button class="playlist-delete-btn" onclick="removeVideoTrack(${index}, event)" title="Remove Video"><i class="fas fa-trash"></i></button></div>`;
+                item.onclick = (e) => { if(!e.target.closest('.playlist-delete-btn')) loadVideo(index); };
                 videoPlaylistContainer.appendChild(item);
             });
-            if (videoPlaylistData.length > 0 && videoElement.src === "") loadVideo(0);
+            if (videoPlaylistData.length > 0 && videoElement.src === "" && videoPlaylistData[0]) loadVideo(0);
+            if (videoPlaylistData.length === 0) {
+                videoElement.src = "";
+                document.getElementById('current-video-title').textContent = "Select a video";
+                document.getElementById('video-folder-status').textContent = "কোনো ভিডিও সিলেক্ট করা হয়নি";
+            }
+        }
+
+        function removeVideoTrack(index, event) {
+            if(event) event.stopPropagation();
+            videoPlaylistData.splice(index, 1);
+            if (currentVideoIndex >= index && currentVideoIndex > 0) {
+                currentVideoIndex--;
+            }
+            initVideoPlaylist();
+            if (videoPlaylistData.length > 0) {
+                loadVideo(currentVideoIndex);
+            } else {
+                videoElement.pause();
+                videoElement.src = "";
+                document.getElementById('current-video-title').textContent = "Select a video";
+            }
         }
 
         function loadVideo(index) {
+            if(!videoPlaylistData[index]) return;
             currentVideoIndex = index;
             let video = videoPlaylistData[index];
             videoElement.src = video.src;
