@@ -1363,13 +1363,11 @@
             let clientX = e.clientX || (e.touches && e.touches.length > 0 ? e.touches[0].clientX : 0);
             let clientY = e.clientY || (e.touches && e.touches.length > 0 ? e.touches[0].clientY : 0);
             
-            let tab = getCurrentTab();
-            let currentScale = tab ? tab.scale : 1.0;
             let outputScale = window.devicePixelRatio || 1;
 
             return {
-                x: ((clientX - rect.left) / currentScale) * outputScale,
-                y: ((clientY - rect.top) / currentScale) * outputScale
+                x: ((clientX - rect.left) / (rect.width / drawCanvas.width)) * outputScale,
+                y: ((clientY - rect.top) / (rect.height / drawCanvas.height)) * outputScale
             };
         }
 
