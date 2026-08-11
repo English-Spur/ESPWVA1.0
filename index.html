@@ -167,14 +167,12 @@
         }
         .pdf-view-area:active { cursor: grabbing; }
         
-        /* CSS Transform Scale প্রযুক্তির জন্য ক্যানভাস কন্টেইনার র‍্যাপার */
+        /* পারফেক্ট এইচডি রেন্ডারিং কন্টেইনার */
         .canvas-container {
             position: relative; display: inline-block; line-height: 0; background: #ffffff;
             border-radius: 10px; box-shadow: 0 15px 30px -10px rgba(0,0,0,0.15); border-top: 5px solid var(--accent); overflow: hidden;
             flex-shrink: 0; margin: 20px;
             cursor: default;
-            transform-origin: top left;
-            transition: transform 0.1s ease-out;
         }
 
         #pdfCanvas { display: block; max-width: none; height: auto; }
@@ -1228,7 +1226,7 @@
             let container = document.getElementById('canvasContainer');
             container.className = 'canvas-container';
 
-            let outputScale = window.devicePixelRatio || 1;
+            let outputScale = (window.devicePixelRatio || 1) * 1.5; // ক্রিস্টাল ক্লিয়ার এইচডি শার্পনেস
 
             if (tab.type === 'image') {
                 let img = tab.imgElement;
@@ -1255,7 +1253,7 @@
                 restoreNotesOnly(tab, num);
             } else {
                 tab.pdfDoc.getPage(num).then(function(page) {
-                    let viewport = page.getViewport({ scale: 1.35 });
+                    let viewport = page.getViewport({ scale: 2.0 });
 
                     pdfCanvas.width = Math.floor(viewport.width * outputScale);
                     pdfCanvas.height = Math.floor(viewport.height * outputScale);
@@ -1358,6 +1356,7 @@
             tab.textNotes[tab.pageNum] = [];
         }
 
+        // পারফেক্ট পেন পয়েন্ট সিঙ্ক ম্যাট্রিক্স
         function getCanvasPos(e) {
             const rect = drawCanvas.getBoundingClientRect();
             let clientX = e.clientX || (e.touches && e.touches.length > 0 ? e.touches[0].clientX : 0);
