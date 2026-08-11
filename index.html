@@ -89,16 +89,9 @@
             width: 100%; -webkit-overflow-scrolling: touch;
         }
 
-        /* ব্র্যান্ড নেম ফ্রিজড বা ফিক্সড সেকশন */
-        .brand-fixed-container {
-            position: sticky; left: 0; z-index: 101000; background: var(--toolbar-bg);
-            display: flex; align-items: center; gap: 6px; padding-right: 12px;
-            border-right: 2px solid var(--border); flex-shrink: 0; box-shadow: 5px 0 10px -5px rgba(0,0,0,0.05);
-        }
-
         .toolbar-section { display: flex; align-items: center; gap: 6px; flex-wrap: nowrap; flex-shrink: 0; }
         
-        .brand-mini { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+        .brand-mini { display: flex; align-items: center; gap: 6px; margin-right: 6px; flex-shrink: 0; }
         .brand-mini img { height: 26px; width: auto; object-fit: contain; }
         .brand-mini span { font-weight: 800; font-size: 13.5px; color: var(--primary); letter-spacing: -0.3px; }
         .brand-mini span span { color: #f97316; }
@@ -367,8 +360,8 @@
     <div class="pdf-tab-bar" id="pdfTabBar"></div>
 
     <div class="acrobat-toolbar">
-        <!-- ব্র্যান্ড নেম ফ্রিজড বা ফিক্সড সেকশন -->
-        <div class="brand-fixed-container">
+        <!-- ব্র্যান্ড এবং ফাইল ওপেন -->
+        <div class="toolbar-section">
             <div class="brand-mini">
                 <img src="logo.png" alt="Logo" onerror="this.style.display='none'">
                 <span>ENGLISH <span>SPUR</span></span>
@@ -445,10 +438,9 @@
                 <button class="tool-btn secondary" style="padding: 3px 6px;" onclick="nextPage()" title="Next Page"><i class="fas fa-chevron-right"></i></button>
             </div>
 
-            <!-- 11. Fit & Width Buttons + 100% Zoom Reset Button -->
+            <!-- 11. Fit & Width Buttons -->
             <button class="tool-btn secondary" onclick="fitToPage()" title="Fit to Page (F)"><i class="fas fa-expand"></i> Fit <span class="shortcut-badge">F</span></button>
             <button class="tool-btn secondary" onclick="fitToWidth()" title="Page Width Fit (W)"><i class="fas fa-arrows-alt-h"></i> Width <span class="shortcut-badge">W</span></button>
-            <button class="tool-btn secondary" onclick="resetZoom100()" title="100% Zoom View (1-Click Reset)"><i class="fas fa-compress"></i> 100%</button>
             <button class="tool-btn secondary" onclick="zoomIn()" title="Zoom In (Ctrl +)"><i class="fas fa-search-plus"></i></button>
             <button class="tool-btn secondary" onclick="zoomOut()" title="Zoom Out (Ctrl -)"><i class="fas fa-search-minus"></i></button>
             <input type="text" class="zoom-indicator-input" id="zoomIndicatorInput" value="135%" title="Type zoom percentage and press Enter" onchange="jumpToZoom(this.value)" onkeypress="if(event.key==='Enter') jumpToZoom(this.value)">
@@ -606,6 +598,7 @@
             showConfirmDialog("সিস্টেম রিফ্রেশ", "আপনি কি সিস্টেমটি রিফ্রেশ করতে চান? (আপনার লগইন এবং বর্তমান সেশন সুরক্ষিত থাকবে)", () => {
                 let tab = getCurrentTab();
                 if (tab) {
+                    saveCurrentPageData(tab);
                     renderPage(tab.pageNum);
                 }
                 if (typeof initNotepadCanvas === 'function') {
@@ -614,7 +607,7 @@
             });
         }
 
-        /* ইউটিলিটি টুলস লজিক */
+        /* ইউটিলিটি টুলস লজিক (Calculator, Currency Converter, World Clock with Date/Day, and Date-based Daily Fun Facts) */
         function openUtility(type) {
             let titleEl = document.getElementById('utilityModalTitle');
             let bodyEl = document.getElementById('utilityModalBody');
@@ -729,6 +722,7 @@
             document.getElementById('utilityModalOverlay').classList.remove('active');
         }
 
+        // ক্যালকুলেটর ফাংশনস
         let calcVal = "0";
         function calcClear() { calcVal = "0"; document.getElementById('calcScreen').value = calcVal; }
         function calcAppend(char) {
@@ -745,6 +739,7 @@
             document.getElementById('calcScreen').value = calcVal;
         }
 
+        // কারেন্সি কনভার্টার ফাংশনস (USD Based Rates)
         function convertCurrency() {
             let amount = parseFloat(document.getElementById('currAmount').value) || 0;
             let from = document.getElementById('currFrom').value;
@@ -756,6 +751,7 @@
             document.getElementById('currResult').textContent = `Result: ${finalVal.toFixed(2)} ${to}`;
         }
 
+        // ওয়ার্ল্ড ক্লক লজিক (Time, Date & Day)
         function updateWorldClocks() {
             setInterval(() => {
                 let now = new Date();
@@ -781,6 +777,7 @@
             if(dEl) dEl.textContent = dateStr;
         }
 
+        // Free space mouse panning support on pdfViewArea
         const pdfViewArea = document.getElementById('pdfViewArea');
         let isDraggingView = false, startViewX = 0, startViewY = 0;
 
@@ -965,27 +962,21 @@
             if (!tab) return;
             let cleanVal = parseFloat(val.replace('%', '').trim());
             if (!isNaN(cleanVal) && cleanVal > 0) {
+                saveCurrentPageData(tab);
                 tab.scale = (cleanVal / 100) * 1.2;
                 if (tab.scale < 0.5) tab.scale = 0.5;
                 if (tab.scale > 4.0) tab.scale = 4.0;
                 updateZoomIndicator(tab.scale);
-                renderPage(tab.pageNum, true); // Zoom করলে অ্যানোটেশন মুছে যাবে যাতে ফ্রেশ ভিউ পাওয়া যায়
+                renderPage(tab.pageNum);
             } else {
                 updateZoomIndicator(tab.scale);
             }
         }
 
-        function resetZoom100() {
-            let tab = getCurrentTab();
-            if (!tab) return;
-            tab.scale = 1.2; // 100% standard zoom scale
-            updateZoomIndicator(tab.scale);
-            renderPage(tab.pageNum, true); // 1 ক্লিকে 100% ভিউ এবং ফ্রেশ ক্যানভাস
-        }
-
         function fitToPage() {
             let tab = getCurrentTab();
             if (!tab) return;
+            saveCurrentPageData(tab);
             let viewArea = document.getElementById('pdfViewArea');
             let availWidth = viewArea.clientWidth - 50;
             let availHeight = viewArea.clientHeight - 50;
@@ -996,7 +987,7 @@
                 let scaleY = availHeight / img.height;
                 tab.scale = Math.min(scaleX, scaleY);
                 updateZoomIndicator(tab.scale);
-                renderPage(tab.pageNum, true);
+                renderPage(tab.pageNum);
             } else {
                 tab.pdfDoc.getPage(tab.pageNum).then(function(page) {
                     let unscaledViewport = page.getViewport({ scale: 1.0 });
@@ -1004,7 +995,7 @@
                     let scaleY = availHeight / unscaledViewport.height;
                     tab.scale = Math.min(scaleX, scaleY);
                     updateZoomIndicator(tab.scale);
-                    renderPage(tab.pageNum, true);
+                    renderPage(tab.pageNum);
                 });
             }
         }
@@ -1012,6 +1003,7 @@
         function fitToWidth() {
             let tab = getCurrentTab();
             if (!tab) return;
+            saveCurrentPageData(tab);
             let viewArea = document.getElementById('pdfViewArea');
             let availWidth = viewArea.clientWidth - 40;
             
@@ -1019,13 +1011,13 @@
                 let img = tab.imgElement;
                 tab.scale = availWidth / img.width;
                 updateZoomIndicator(tab.scale);
-                renderPage(tab.pageNum, true);
+                renderPage(tab.pageNum);
             } else {
                 tab.pdfDoc.getPage(tab.pageNum).then(function(page) {
                     let unscaledViewport = page.getViewport({ scale: 1.0 });
                     tab.scale = availWidth / unscaledViewport.width;
                     updateZoomIndicator(tab.scale);
-                    renderPage(tab.pageNum, true);
+                    renderPage(tab.pageNum);
                 });
             }
         }
@@ -1045,7 +1037,7 @@
                         fileReader.onload = function() {
                             let typedarray = new Uint8Array(this.result);
                             pdfjsLib.getDocument(typedarray).promise.then(function(pdfDoc_) {
-                                let newTab = { id: tabId, type: 'pdf', name: file.name, pdfDoc: pdfDoc_, pageNum: 1, scale: defaultScale, drawingsVector: {}, textNotes: {} };
+                                let newTab = { id: tabId, type: 'pdf', name: file.name, pdfDoc: pdfDoc_, pageNum: 1, scale: defaultScale, drawingsVector: {}, textNotes: {}, historyStacks: {}, redoStacks: {} };
                                 openTabs.push(newTab);
                                 switchTab(tabId);
                             });
@@ -1056,7 +1048,7 @@
                         reader.onload = function(event) {
                             let imgObj = new Image();
                             imgObj.onload = function() {
-                                let newTab = { id: tabId, type: 'image', name: file.name, imgElement: imgObj, pageNum: 1, scale: defaultScale, drawingsVector: {}, textNotes: {} };
+                                let newTab = { id: tabId, type: 'image', name: file.name, imgElement: imgObj, pageNum: 1, scale: defaultScale, drawingsVector: {}, textNotes: {}, historyStacks: {}, redoStacks: {} };
                                 openTabs.push(newTab);
                                 switchTab(tabId);
                             };
@@ -1077,7 +1069,7 @@
             if (!currentTab) return;
             renderTabsUI();
             updateZoomIndicator(currentTab.scale);
-            renderPage(currentTab.pageNum, false);
+            renderPage(currentTab.pageNum);
         }
 
         function closeTab(tabId, event) {
@@ -1094,6 +1086,7 @@
                 document.getElementById('page_count').textContent = '1';
                 document.getElementById('pageJumpInput').value = '1';
                 document.getElementById('zoomIndicatorInput').value = '135%';
+                document.getElementById('canvasContainer').className = 'canvas-container';
                 document.querySelectorAll('.pdf-text-note').forEach(n => n.remove());
             }
         }
@@ -1118,9 +1111,38 @@
             let notesData = [];
             document.querySelectorAll('.pdf-text-note').forEach(note => {
                 let currentScale = tab.scale;
-                notesData.push({ text: note.value, pdfX: note.offsetLeft / currentScale, pdfY: note.offsetTop / currentScale, width: note.style.width, color: note.style.color, bg: note.style.backgroundColor });
+                let absLeft = parseFloat(note.style.left) || note.offsetLeft;
+                let absTop = parseFloat(note.style.top) || note.offsetTop;
+                notesData.push({ text: note.value, pdfX: absLeft / currentScale, pdfY: absTop / currentScale, width: note.style.width, color: note.style.color, bg: note.style.backgroundColor });
             });
             tab.textNotes[tab.pageNum] = notesData;
+        }
+
+        function saveState() {
+            let tab = getCurrentTab();
+            if (!tab) return;
+            if (!tab.historyStacks[tab.pageNum]) tab.historyStacks[tab.pageNum] = [];
+            if (!tab.redoStacks[tab.pageNum]) tab.redoStacks[tab.pageNum] = [];
+            tab.historyStacks[tab.pageNum].push(JSON.parse(JSON.stringify(tab.drawingsVector[tab.pageNum] || [])));
+            tab.redoStacks[tab.pageNum] = [];
+        }
+
+        function undoCanvas() {
+            let tab = getCurrentTab();
+            if (!tab || !tab.historyStacks[tab.pageNum] || tab.historyStacks[tab.pageNum].length === 0) return;
+            if (!tab.redoStacks[tab.pageNum]) tab.redoStacks[tab.pageNum] = [];
+            tab.redoStacks[tab.pageNum].push(JSON.parse(JSON.stringify(tab.drawingsVector[tab.pageNum] || [])));
+            tab.drawingsVector[tab.pageNum] = tab.historyStacks[tab.pageNum].pop();
+            redrawVectorCanvas(tab);
+        }
+
+        function redoCanvas() {
+            let tab = getCurrentTab();
+            if (!tab || !tab.redoStacks[tab.pageNum] || tab.redoStacks[tab.pageNum].length === 0) return;
+            if (!tab.historyStacks[tab.pageNum]) tab.historyStacks[tab.pageNum] = [];
+            tab.historyStacks[tab.pageNum].push(JSON.parse(JSON.stringify(tab.drawingsVector[tab.pageNum] || [])));
+            tab.drawingsVector[tab.pageNum] = tab.redoStacks[tab.pageNum].pop();
+            redrawVectorCanvas(tab);
         }
 
         function redrawVectorCanvas(tab) {
@@ -1128,15 +1150,14 @@
             let paths = tab.drawingsVector[tab.pageNum];
             if (!paths || paths.length === 0) return;
 
-            let outputScale = window.devicePixelRatio || 1;
-            let currentScale = tab.scale * outputScale;
+            let currentScale = tab.scale;
 
             paths.forEach(cmd => {
                 drawCtx.save();
                 drawCtx.lineJoin = 'round';
                 drawCtx.lineCap = cmd.mode === 'highlighter' ? 'butt' : 'round';
                 drawCtx.miterLimit = 10;
-                drawCtx.lineWidth = (cmd.width || 2) * currentScale;
+                drawCtx.lineWidth = cmd.width * currentScale;
                 drawCtx.strokeStyle = cmd.color;
 
                 if (cmd.mode === 'pen') {
@@ -1155,37 +1176,37 @@
                     drawCtx.globalAlpha = 0.35;
                     drawCtx.globalCompositeOperation = 'multiply';
                     drawCtx.beginPath();
-                    drawCtx.moveTo((cmd.startX || 0) * currentScale, (cmd.startY || 0) * currentScale);
-                    drawCtx.lineTo((cmd.endX || 0) * currentScale, (cmd.endY || 0) * currentScale);
+                    drawCtx.moveTo(cmd.startX * currentScale, cmd.startY * currentScale);
+                    drawCtx.lineTo(cmd.endX * currentScale, cmd.endY * currentScale);
                     drawCtx.stroke();
                 } else if (cmd.mode === 'line') {
                     drawCtx.globalAlpha = 1.0;
                     drawCtx.globalCompositeOperation = 'source-over';
                     drawCtx.beginPath();
-                    drawCtx.moveTo((cmd.startX || 0) * currentScale, (cmd.startY || 0) * currentScale);
-                    drawCtx.lineTo((cmd.endX || 0) * currentScale, (cmd.endY || 0) * currentScale);
+                    drawCtx.moveTo(cmd.startX * currentScale, cmd.startY * currentScale);
+                    drawCtx.lineTo(cmd.endX * currentScale, cmd.endY * currentScale);
                     drawCtx.stroke();
                 } else if (cmd.mode === 'box') {
                     drawCtx.globalAlpha = 1.0;
                     drawCtx.globalCompositeOperation = 'source-over';
-                    drawCtx.strokeRect((cmd.startX || 0) * currentScale, (cmd.startY || 0) * currentScale, ((cmd.endX || 0) - (cmd.startX || 0)) * currentScale, ((cmd.endY || 0) - (cmd.startY || 0)) * currentScale);
+                    drawCtx.strokeRect(cmd.startX * currentScale, cmd.startY * currentScale, (cmd.endX - cmd.startX) * currentScale, (cmd.endY - cmd.startY) * currentScale);
                 } else if (cmd.mode === 'circle') {
                     drawCtx.globalAlpha = 1.0;
                     drawCtx.globalCompositeOperation = 'source-over';
-                    let rx = Math.abs((cmd.endX || 0) - (cmd.startX || 0)) / 2 * currentScale;
-                    let ry = Math.abs((cmd.endY || 0) - (cmd.startY || 0)) / 2 * currentScale;
-                    let cx = ((cmd.startX || 0) + ((cmd.endX || 0) - (cmd.startX || 0)) / 2) * currentScale;
-                    let cy = ((cmd.startY || 0) + ((cmd.endY || 0) - (cmd.startY || 0)) / 2) * currentScale;
+                    let rx = Math.abs(cmd.endX - cmd.startX) / 2 * currentScale;
+                    let ry = Math.abs(cmd.endY - cmd.startY) / 2 * currentScale;
+                    let cx = (cmd.startX + (cmd.endX - cmd.startX) / 2) * currentScale;
+                    let cy = (cmd.startY + (cmd.endY - cmd.startY) / 2) * currentScale;
                     drawCtx.beginPath();
                     drawCtx.ellipse(cx, cy, rx, ry, 0, 0, 2 * Math.PI);
                     drawCtx.stroke();
                 } else if (cmd.mode === 'arrow') {
                     drawCtx.globalAlpha = 1.0;
                     drawCtx.globalCompositeOperation = 'source-over';
-                    let sx = (cmd.startX || 0) * currentScale, sy = (cmd.startY || 0) * currentScale;
-                    let ex = (cmd.endX || 0) * currentScale, ey = (cmd.endY || 0) * currentScale;
+                    let sx = cmd.startX * currentScale, sy = cmd.startY * currentScale;
+                    let ex = cmd.endX * currentScale, ey = cmd.endY * currentScale;
                     drawCtx.beginPath(); drawCtx.moveTo(sx, sy); drawCtx.lineTo(ex, ey); drawCtx.stroke();
-                    let angle = Math.atan2(ey - sy, ex - sx), headLen = (12 + (cmd.width || 2)) * currentScale;
+                    let angle = Math.atan2(ey - sy, ex - sx), headLen = (12 + cmd.width) * currentScale;
                     drawCtx.beginPath();
                     drawCtx.moveTo(ex, ey);
                     drawCtx.lineTo(ex - headLen * Math.cos(angle - Math.PI / 6), ey - headLen * Math.sin(angle - Math.PI / 6));
@@ -1197,7 +1218,7 @@
             });
         }
 
-        function renderPage(num, resetAnnotations = false) {
+        function renderPage(num) {
             let tab = getCurrentTab();
             if (!tab) return;
             
@@ -1206,12 +1227,8 @@
 
             document.querySelectorAll('.pdf-text-note').forEach(n => n.remove());
 
-            // যদি জুম করার কারণে পেজ রেন্ডার হয়, তবে ফ্রেশ ভিউ দেওয়ার জন্য পুরনো অ্যানোটেশন রিসেট করে দেওয়া হবে
-            if (resetAnnotations) {
-                tab.drawingsVector[tab.pageNum] = [];
-                tab.textNotes[tab.pageNum] = [];
-                drawCtx.clearRect(0, 0, drawCanvas.width, drawCanvas.height);
-            }
+            let container = document.getElementById('canvasContainer');
+            container.className = 'canvas-container';
 
             let outputScale = window.devicePixelRatio || 1;
 
@@ -1235,10 +1252,8 @@
                 pdfCtx.drawImage(img, 0, 0, vWidth, vHeight);
                 pdfCtx.restore();
 
-                if (!resetAnnotations) {
-                    redrawVectorCanvas(tab);
-                    restoreNotesOnly(tab, num);
-                }
+                redrawVectorCanvas(tab);
+                restoreNotesOnly(tab, num);
             } else {
                 tab.pdfDoc.getPage(num).then(function(page) {
                     let viewport = page.getViewport({ scale: tab.scale });
@@ -1262,10 +1277,8 @@
                     };
 
                     page.render(renderContext).promise.then(() => {
-                        if (!resetAnnotations) {
-                            redrawVectorCanvas(tab);
-                            restoreNotesOnly(tab, num);
-                        }
+                        redrawVectorCanvas(tab);
+                        restoreNotesOnly(tab, num);
                     });
                 });
             }
@@ -1291,18 +1304,18 @@
         function prevPage() { 
             let tab = getCurrentTab(); 
             if (!tab || tab.type === 'image' || tab.pageNum <= 1) return; 
-            saveCurrentPageData(tab); tab.pageNum--; renderPage(tab.pageNum, false); 
+            saveCurrentPageData(tab); tab.pageNum--; renderPage(tab.pageNum); 
         }
         function nextPage() { 
             let tab = getCurrentTab(); 
             if (!tab || tab.type === 'image' || tab.pageNum >= tab.pdfDoc.numPages) return; 
-            saveCurrentPageData(tab); tab.pageNum++; renderPage(tab.pageNum, false); 
+            saveCurrentPageData(tab); tab.pageNum++; renderPage(tab.pageNum); 
         }
         function jumpToPage(val) {
             let tab = getCurrentTab();
             if (!tab || tab.type === 'image') return;
             let num = parseInt(val);
-            if (num >= 1 && num <= tab.pdfDoc.numPages) { saveCurrentPageData(tab); tab.pageNum = num; renderPage(tab.pageNum, false); }
+            if (num >= 1 && num <= tab.pdfDoc.numPages) { saveCurrentPageData(tab); tab.pageNum = num; renderPage(tab.pageNum); }
             else { document.getElementById('pageJumpInput').value = tab.pageNum; }
         }
 
@@ -1310,9 +1323,10 @@
             let tab = getCurrentTab();
             if (!tab) return;
             if (tab.scale < 3.0) { 
+                saveCurrentPageData(tab);
                 tab.scale += 0.25; 
                 updateZoomIndicator(tab.scale);
-                renderPage(tab.pageNum, true); // Zoom করার সাথে সাথে ফ্রেশ পেজ পাওয়ার জন্য অ্যানোটেশন ক্লিয়ার হবে
+                renderPage(tab.pageNum); 
             } 
         }
 
@@ -1320,9 +1334,10 @@
             let tab = getCurrentTab();
             if (!tab) return;
             if (tab.scale > 0.8) { 
+                saveCurrentPageData(tab);
                 tab.scale -= 0.25; 
                 updateZoomIndicator(tab.scale);
-                renderPage(tab.pageNum, true); // Zoom করার সাথে সাথে ফ্রেশ পেজ পাওয়ার জন্য অ্যানোটেশন ক্লিয়ার হবে
+                renderPage(tab.pageNum); 
             } 
         }
 
@@ -1341,6 +1356,7 @@
         function clearCanvas() { 
             let tab = getCurrentTab();
             if (!tab) return;
+            saveState();
             drawCtx.clearRect(0, 0, drawCanvas.width, drawCanvas.height); 
             document.querySelectorAll('.pdf-text-note').forEach(n => n.remove());
             tab.drawingsVector[tab.pageNum] = [];
@@ -1352,12 +1368,12 @@
             let clientX = e.clientX || (e.touches && e.touches.length > 0 ? e.touches[0].clientX : 0);
             let clientY = e.clientY || (e.touches && e.touches.length > 0 ? e.touches[0].clientY : 0);
             
-            let tab = getCurrentTab();
-            let currentScale = tab ? tab.scale : 1.2;
+            let xView = (clientX - rect.left) * (drawCanvas.width / rect.width);
+            let yView = (clientY - rect.top) * (drawCanvas.height / rect.height);
 
             return {
-                x: (clientX - rect.left) / currentScale,
-                y: (clientY - rect.top) / currentScale
+                x: xView,
+                y: yView
             };
         }
 
@@ -1426,15 +1442,17 @@
             let pos = getCanvasPos(e);
             let tab = getCurrentTab();
             let currentScale = tab ? tab.scale : 1.2;
-            let baseEvX = pos.x;
-            let baseEvY = pos.y;
+            let baseEvX = pos.x / (window.devicePixelRatio || 1) / currentScale;
+            let baseEvY = pos.y / (window.devicePixelRatio || 1) / currentScale;
 
             if (currentMode === 'eraser') {
+                saveState();
                 eraseAt(baseEvX, baseEvY, tab);
                 isDrawing = true;
                 return;
             }
 
+            saveState();
             isDrawing = true;
 
             startX = pos.x; startY = pos.y; lastX = pos.x; lastY = pos.y;
@@ -1518,9 +1536,10 @@
             if (e.type.startsWith('touch') && e.cancelable) e.preventDefault();
             let pos = getCanvasPos(e);
             let tab = getCurrentTab();
+            let currentScale = tab ? tab.scale : 1.2;
 
-            let baseEvX = pos.x;
-            let baseEvY = pos.y;
+            let baseEvX = pos.x / (window.devicePixelRatio || 1) / currentScale;
+            let baseEvY = pos.y / (window.devicePixelRatio || 1) / currentScale;
 
             if (currentMode === 'eraser') {
                 eraseAt(baseEvX, baseEvY, tab);
@@ -1614,6 +1633,12 @@
             if (e.ctrlKey && key === 'o') {
                 e.preventDefault();
                 document.getElementById('pdfUpload').click();
+            } else if (e.ctrlKey && key === 'z') {
+                e.preventDefault();
+                undoCanvas();
+            } else if (e.ctrlKey && key === 'y') {
+                e.preventDefault();
+                redoCanvas();
             } else if (e.ctrlKey && (e.key === '+' || e.key === '=')) {
                 e.preventDefault();
                 zoomIn();
